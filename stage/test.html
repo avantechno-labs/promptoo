@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#222">
+<pre id="o" style="color:#9f9;font:12px monospace;white-space:pre-wrap">pending</pre>
+<script src="../vendor/three.min.js"></script><script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script><script src="../vendor/MaskPass.js"></script>
+<script src="../vendor/LuminosityHighPassShader.js"></script><script src="../vendor/UnrealBloomPass.js"></script><script src="../vendor/BokehShader.js"></script><script src="../vendor/BokehPass.js"></script>
+<script src="core.js"></script><script src="passes.js"></script><script src="dummy.js"></script>
+<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script>
+<script>
+const errs=[];const ce=console.error,cw=console.warn;console.error=(...a)=>{errs.push("E "+a.join(" ").slice(0,300));ce(...a)};console.warn=(...a)=>{errs.push("W "+a.join(" ").slice(0,300));cw(...a)};
+window.addEventListener("error",e=>errs.push("ERR "+e.message));
+const q=new URLSearchParams(location.search);const out=document.getElementById("o");
+try{
+  const cv=document.createElement("canvas");document.body.appendChild(cv);
+  const W=+q.get("w")||960,H=+q.get("h")||540;
+  const st=new Stage3D.Stage({canvas:cv,width:W,height:H,pixelRatio:1});
+  const sel=q.get("sel")?JSON.parse(q.get("sel")):{};
+  st.apply({sel,scene:{subject:"a woman in a red coat",action:q.get("action")||"stands"},char:q.get("char")?JSON.parse(q.get("char")):null,dur:5});
+  const t=q.get("t")!=null?+q.get("t"):.5;
+  st.renderAt(t,0.016);st.renderAt(t,0.016);
+  out.textContent="OK effects:"+st.active.length+" passes:"+(st.passes||[]).length+"\nerrors:"+JSON.stringify(st.errors)+"\nconsole:"+JSON.stringify(errs);
+  out.style.cssText="position:fixed;left:0;top:0;font:11px monospace;color:#9f9;background:#0008;padding:2px;max-width:100%";
+}catch(e){out.textContent="THROW "+e.message+"\n"+e.stack}
+</script>

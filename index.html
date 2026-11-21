@@ -322,6 +322,14 @@ html[data-skin="anime"] .ltab-bar{border-radius:999px}html[data-skin="anime"] .l
 .pv-check{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0}
 .ck{padding:2px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mut);font:500 12px var(--f-ui)}
 .ck.ok{border-color:transparent;background:var(--sel);color:var(--acc)}.ck:hover{border-color:var(--acc)}
+/* ---------- 3D preview ---------- */
+.pv-3d{position:relative;line-height:0;max-width:100%;max-height:100%}.pv-3d canvas{display:block}.pv-3d .ov3{position:absolute;left:0;top:0;pointer-events:none}
+.pv-tools{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.pv-tools button{padding:3px 9px;font-size:11.5px;border-radius:8px}
+#big3d{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);display:grid;place-items:center}#big3d[hidden]{display:none}
+.b3-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;max-width:96vw;max-height:94vh;overflow:auto}
+.b3-head{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.b3-body{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.b3-view{line-height:0;border-radius:10px;overflow:hidden;background:#000}.b3-side{width:300px}.b3-side canvas{width:300px;height:300px;border-radius:12px;display:block;background:var(--panel2);touch-action:none;cursor:crosshair}
+.t3img{width:100%;display:block;border-radius:inherit;aspect-ratio:16/9;object-fit:cover}
 /* ---------- side section: live preview + vertical steps ---------- */
 .center{min-width:0}
 .pdraw{margin-top:12px}.pdraw summary{cursor:pointer;font:600 13px var(--f-ui);list-style:none}.pdraw summary::-webkit-details-marker{display:none}
@@ -611,6 +619,10 @@ const PACE={"slow motion":["3.2s","ease-in-out","","🐢"],"real-time":["1.4s","
 const TRANS={"cut":"tr-cut","fade in":"tr-fadein","fade to black":"tr-fadeout","match cut":"tr-match match","dissolve":"tr-dissolve","whip-pan transition":"tr-whip","smash cut":"tr-smash"};
 
 function thumb(k,o){
+  if(window.Stage3DUI&&Stage3DUI.thumbsOn){const h=Stage3DUI.thumbHTML(k,o);if(h)return h}
+  try{return thumb2d(k,o)}catch(e){return th(scene({}),{glyph:"✦"})}
+}
+function thumb2d(k,o){
   let h;
   if(window.EXTRA_THUMB&&EXTRA_THUMB[k])h=EXTRA_THUMB[k](o);
   else if(k==="shot"||k==="angle"){const s=SHOT[o]||{};h=th(scene(Object.assign({two:s.two},s.sc||{})),{tf:s.tf,to:s.to,extra:s.extra})}
@@ -1131,6 +1143,11 @@ render();
 const label=()=>{b.textContent=r.dataset.skin==="anime"?"Classic theme":"Anime theme"};label();
 b.onclick=()=>{const v=r.dataset.skin==="anime"?"":"anime";if(v)r.dataset.skin=v;else delete r.dataset.skin;try{localStorage.setItem("promptoo.skin",v)}catch(e){}label()}})();</script>
 <script>document.getElementById("viewPrompt").onclick=()=>{const d=document.getElementById("promptDrawer");d.open=!d.open;if(d.open&&d.scrollIntoView)d.scrollIntoView({behavior:"smooth",block:"start"})};</script>
+<script src="vendor/three.min.js"></script><script src="vendor/EffectComposer.js"></script><script src="vendor/CopyShader.js"></script><script src="vendor/ShaderPass.js"></script><script src="vendor/RenderPass.js"></script><script src="vendor/MaskPass.js"></script>
+<script src="vendor/LuminosityHighPassShader.js"></script><script src="vendor/UnrealBloomPass.js"></script><script src="vendor/BokehShader.js"></script><script src="vendor/BokehPass.js"></script>
+<script src="stage/core.js"></script><script src="stage/passes.js"></script><script src="stage/dummy.js"></script>
+<script src="effects/camera.js"></script><script src="effects/world.js"></script><script src="effects/places.js"></script><script src="effects/compose.js"></script><script src="effects/look.js"></script><script src="stage/packs.js"></script>
+<script src="stage/bridge.js"></script>
 <script src="ai.js"></script>
 </body>
 </html>

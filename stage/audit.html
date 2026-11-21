@@ -1,0 +1,33 @@
+<!doctype html><meta charset="utf-8"><body><pre id="o">pending</pre>
+<script src="../vendor/three.min.js"></script><script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script><script src="../vendor/MaskPass.js"></script>
+<script src="../vendor/LuminosityHighPassShader.js"></script><script src="../vendor/UnrealBloomPass.js"></script><script src="../vendor/BokehShader.js"></script><script src="../vendor/BokehPass.js"></script>
+<script src="core.js"></script><script src="passes.js"></script><script src="dummy.js"></script><script src="packs.js"></script>
+<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script>
+<script>
+const out=document.getElementById("o");let cur="";const fails=[];
+const ce=console.error,cw=console.warn;console.error=(...a)=>{fails.push(cur+" console.error: "+a.join(" ").slice(0,200))};console.warn=(...a)=>{fails.push(cur+" console.warn: "+a.join(" ").slice(0,200))};
+window.addEventListener("error",e=>fails.push(cur+" ERR "+e.message));
+const cv=document.createElement("canvas");document.body.appendChild(cv);
+const st=new Stage3D.Stage({canvas:cv,width:240,height:135,pixelRatio:1});
+const list=[];Object.keys(Stage3D.REG).forEach(g=>Object.keys(Stage3D.REG[g]).forEach(n=>list.push([g,n])));
+const q=new URLSearchParams(location.search);const only=q.get("g");
+const jobs=list.filter(x=>!only||x[0]===only);
+let i=0,ok=0,slow=[];
+function step(){
+  const t0=performance.now();
+  for(let k=0;k<4&&i<jobs.length;k++,i++){
+    const [g,n]=jobs[i];cur=g+":"+n;
+    try{
+      const base={shot:["full shot"]};base[g]=[n];
+      st.apply({sel:base,scene:{subject:"a woman in a red coat",action:"walks"},char:null,dur:5});
+      [.1,.5,.95].forEach(t=>st.renderAt(t,.016));
+      if(st.errors.length){fails.push(cur+" stage: "+st.errors.join(" | "));st.errors.length=0}
+      ok++;
+    }catch(e){fails.push(cur+" THROW "+e.message)}
+  }
+  const dt=performance.now()-t0;
+  out.textContent="progress "+i+"/"+jobs.length;
+  if(i<jobs.length)setTimeout(step,0);else{out.textContent="DONE total="+jobs.length+" ok="+ok+" fails="+fails.length+"\n"+fails.slice(0,60).join("\n")}
+}
+step();
+</script>

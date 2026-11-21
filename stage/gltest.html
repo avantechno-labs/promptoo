@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><body><pre id="o">pending</pre>
+<script src="../vendor/three.min.js"></script>
+<script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script>
+<script>
+try{
+const c=document.createElement("canvas");c.width=64;c.height=64;document.body.appendChild(c);
+const r=new THREE.WebGLRenderer({canvas:c,antialias:true,preserveDrawingBuffer:true});
+const s=new THREE.Scene();s.background=new THREE.Color(0x224466);
+const cam=new THREE.PerspectiveCamera(50,1,.1,50);cam.position.set(0,0,3);
+const m=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xff0000}));s.add(m);
+const comp=new THREE.EffectComposer(r);comp.addPass(new THREE.RenderPass(s,cam));comp.render();
+const gl=r.getContext();const px=new Uint8Array(4);gl.readPixels(32,32,1,1,gl.RGBA,gl.UNSIGNED_BYTE,px);
+document.getElementById("o").textContent="OK three "+THREE.REVISION+" pixel "+Array.from(px).join(",")+" gl "+gl.getParameter(gl.VERSION);
+}catch(e){document.getElementById("o").textContent="ERR "+e.message}
+</script>

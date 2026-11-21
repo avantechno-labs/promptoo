@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#111;color:#ddd;font:11px sans-serif">
+<div id="g" style="display:flex;flex-wrap:wrap;gap:4px;padding:4px"></div><pre id="o" style="position:fixed;right:0;bottom:0;margin:0;background:#000a;color:#9f9">...</pre>
+<script src="../vendor/three.min.js"></script><script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script><script src="../vendor/MaskPass.js"></script>
+<script src="../vendor/LuminosityHighPassShader.js"></script><script src="../vendor/UnrealBloomPass.js"></script><script src="../vendor/BokehShader.js"></script><script src="../vendor/BokehPass.js"></script>
+<script src="core.js"></script><script src="passes.js"></script><script src="dummy.js"></script><script src="packs.js"></script>
+<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script>
+<script>
+const q=new URLSearchParams(location.search);const g=q.get("g");const base=q.get("base")?JSON.parse(q.get("base")):{};const tt=q.get("t")!=null?+q.get("t"):.5;
+const SELS=q.get("sels")?JSON.parse(q.get("sels")):null;const names=SELS?SELS.map(x=>x.label):(q.get("names")?q.get("names").split("|"):Stage3D.names(g));const W=+q.get("w")||256,H=Math.round(W*9/16);
+const errs=[];console.error=(...a)=>errs.push(a.join(" ").slice(0,150));
+const st=new Stage3D.Stage({canvas:document.createElement("canvas"),width:W,height:H,pixelRatio:1});
+const box=document.getElementById("g");
+names.forEach(n=>{
+  let sel=JSON.parse(JSON.stringify(base));if(SELS){sel=SELS.find(x=>x.label===n).sel}else sel[g]=[n];
+  try{st.apply({sel,scene:{subject:"a woman in a red coat",action:q.get("action")||"stands"},char:q.get("char")?JSON.parse(q.get("char")):null,dur:5});st.renderAt(tt,.016);st.renderAt(tt,.016);}catch(e){errs.push(n+" "+e.message)}
+  const c=document.createElement("canvas");c.width=W;c.height=H;c.getContext("2d").drawImage(st.canvas,0,0,W,H);
+  const d=document.createElement("div");d.style.width=W+"px";d.appendChild(c);const l=document.createElement("div");l.textContent=n;d.appendChild(l);box.appendChild(d);
+});
+document.getElementById("o").textContent="done "+names.length+" errs "+JSON.stringify(errs);
+</script>
