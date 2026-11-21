@@ -302,6 +302,12 @@ html[data-skin="anime"] .ltab-bar{border-radius:999px}html[data-skin="anime"] .l
 .pv-media .pv-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:0}
 .pv-media .pv-opts label.wide{grid-column:1/-1}
 .pv-media .pv-opts select{width:100%;max-width:none}
+.scene .sbs{grid-column:3;display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.scene b,.scene .mini{grid-row:1/4}
+.sbadge{padding:2px 9px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mut);font:500 11.5px var(--f-ui);line-height:1.5}
+.sbadge:hover{border-color:var(--acc);color:var(--txt)}
+.sbadge.w{border-color:color-mix(in srgb,var(--warn) 55%,transparent);color:var(--warn)}
+.sbadge.e{border-color:color-mix(in srgb,var(--err) 60%,transparent);color:var(--err)}
 /* ---------- group tabs, families, search, recipes, checklist ---------- */
 .gtabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
 .gtab{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);font:600 13px var(--f-ui)}
@@ -724,7 +730,7 @@ function fullText(){
 }
 
 /* ======================= RENDER ======================= */
-function sceneListHTML(){let t0=0;return S.scenes.map((s,i)=>{const a=t0;t0+=(+s.dur||5);const c=charOf(s);return `<div class="scene ${i===S.cur?"on":""}" data-i="${i}"><b>${i+1}</b><div class="mini">${composite(s)}</div><span>${esc(s.title||(c&&c.name)||s.subject||"Untitled")}</span><small>${ts(a)}–${ts(t0)}</small><button class="sdel" data-sdel="${i}" title="Delete this scene" aria-label="Delete scene ${i+1}">✕</button></div>`}).join("")}
+function sceneListHTML(){let t0=0;return S.scenes.map((s,i)=>{const a=t0;t0+=(+s.dur||5);const c=charOf(s),is=check(s),nw=is.filter(x=>x.l==="e"||x.l==="w").length,ne=is.filter(x=>x.l==="e").length,np=mustCount(s);return `<div class="scene ${i===S.cur?"on":""}" data-i="${i}"><b>${i+1}</b><div class="mini">${composite(s)}</div><span>${esc(s.title||(c&&c.name)||s.subject||"Untitled")}</span><small>${ts(a)}–${ts(t0)}</small><div class="sbs">${nw?`<button class="sbadge ${ne?"e":"w"}" data-sgo="warn" data-i="${i}" title="Show what the checker found in this scene">⚠ ${nw} warning${nw>1?"s":""}</button>`:""}<button class="sbadge" data-sgo="picks" data-i="${i}" title="Show every effect picked in this scene">${np?np+" effect"+(np>1?"s":""):"no effects yet"}</button></div><button class="sdel" data-sdel="${i}" title="Delete this scene" aria-label="Delete scene ${i+1}">✕</button></div>`}).join("")}
 function render(ed=true){
   $("fmt").value=S.fmt;$("fantasy").checked=!!S.fantasy;$("budget").value=S.budget||8;$("wording").value=S.wording||"lines";$("aspect").value=S.aspect;$("quality").value=S.quality;
   $("gStyle").value=S.gStyle;$("gChar").value=S.gChar;$("gNeg").value=S.gNeg;
@@ -1055,6 +1061,9 @@ document.addEventListener("click",e=>{
   if(n=q("[data-sdelx]")){const nm=n.dataset.sdelx;STYLE_LIB.remove(nm);G.style.opts=STYLE_LIB.all();S.scenes.forEach(x=>{if(x.sel.style)x.sel.style=x.sel.style.filter(v=>v!==nm)});render();toast("Style deleted");return}
   if(n=q("#scToggle,[data-sctoggle]")){const card=n.closest(".scard");if(card){const o=!card.classList.contains("open");card.classList.toggle("open",o);UI.scOpen=o}return}
   if(n=q("[data-ltab]")){UI.ltab=n.dataset.ltab;document.querySelectorAll(".ltab").forEach(b=>b.classList.toggle("on",b.dataset.ltab===UI.ltab));$("sceneCard").hidden=UI.ltab!=="scene";$("projPanel").hidden=UI.ltab!=="proj";return}
+  if(n=q("[data-sgo]")){S.cur=+n.dataset.i;UI.pill=null;UI.scOpen=true;UI.ltab="scene";if(n.dataset.sgo==="warn"){UI.all=true}else{UI.all=false;UI.picks=true}
+    render();const sc_=$("sceneCard"),pp=$("projPanel");if(sc_)sc_.hidden=false;if(pp)pp.hidden=true;document.querySelectorAll(".ltab").forEach(b=>b.classList.toggle("on",b.dataset.ltab==="scene"));
+    const tgt=document.querySelector(n.dataset.sgo==="warn"?".chk":".sel");if(tgt&&tgt.scrollIntoView)tgt.scrollIntoView({behavior:"smooth",block:"center"});return}
   if(n=q("[data-gtab]")){UI.tab[S.step]=n.dataset.gtab;render();return}
   if(n=q("[data-fam]")){UI.fam[n.dataset.k]=n.dataset.fam;render();return}
   if(n=q("[data-adv]")){UI.adv[n.dataset.adv]=!UI.adv[n.dataset.adv];render();return}
