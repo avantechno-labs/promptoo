@@ -692,6 +692,7 @@ function thumb2d(k,o){
   else if(k==="pace"){const p=PACE[o];h=`<div class="th live pace ${p[2]}" style="--d:${p[0]};--e:${p[1]}"><div class="track"></div><div class="dot"></div><div class="lbl2">${p[3]}</div></div>`}
   else if(k==="trans"){h=`<div class="th live tr ${TRANS[o]}"><div class="ta"></div><div class="tb"></div><i class="flash"></i></div>`}
   /* drop a real picture at img/<group>/<slug>.jpg and it replaces the drawn preview */
+  if(!window.PROMPTOO_REAL_IMAGES)return h;   // optional photo thumbnails: set window.PROMPTOO_REAL_IMAGES=true once img/<group>/<name>.jpg files exist (avoids hundreds of 404 requests)
   return h.replace(/<\/div>$/,`<img src="img/${k}/${slug(o)}.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5" onerror="this.remove()"></div>`);
 }
 

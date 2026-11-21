@@ -80,7 +80,10 @@
   };
   const errText = j => {
     const e = j && (j.error || (j.errors && j.errors[0]) || j.message);
-    return !e ? "request failed" : typeof e === "string" ? e : (e.message || JSON.stringify(e));
+    if (!e) return "request failed";
+    if (typeof e === "string") return e;
+    const raw = e.metadata && e.metadata.raw ? " (" + String(typeof e.metadata.raw === "string" ? e.metadata.raw : JSON.stringify(e.metadata.raw)).slice(0, 160) + ")" : "";
+    return (e.message || JSON.stringify(e)) + raw;
   };
   async function callAnthropic(key, model, user) {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
@@ -92,20 +95,31 @@
     if (!r.ok) throw new Error(`Error ${r.status}: ${errText(j)}`);
     return (j.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
   }
-  async function callOpenAI(base, key, model, user, tokenParam) {
-    const body = { model, messages: [{ role: "system", content: SYSTEM }, { role: "user", content: user }] };
-    body[tokenParam || "max_tokens"] = 1500;
+  const textOf = c => typeof c === "string" ? c : Array.isArray(c) ? c.map(x => (x && (x.text || x.content)) || "").join("") : "";
+  async function callOpenAI(base, key, model, user, opts) {
+    opts = opts || {};
+    const msgs = opts.fold ? [{ role: "user", content: SYSTEM + "\n\n" + user }] : [{ role: "system", content: SYSTEM }, { role: "user", content: user }];
+    const body = { model, messages: msgs }; body[opts.tokenParam || "max_tokens"] = 3000;
     const headers = { "content-type": "application/json" };
     if (key) headers.authorization = "Bearer " + key;
-    const r = await fetch(base + "/chat/completions", { method: "POST", headers, body: JSON.stringify(body) });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok) {
+    const url = base + "/chat/completions", host = url.replace(/^https?:\/\//, "").split("/")[0];
+    const r = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
+    const raw = await r.text(); let j;
+    try { j = JSON.parse(raw); } catch (e) { throw new Error(`Unexpected reply from ${host} (status ${r.status}). It was not JSON: ${raw.slice(0, 140).replace(/\s+/g, " ")}. Check the base URL.`); }
+    if (!r.ok || j.error) {
       const m = errText(j);
-      if (!tokenParam && /max_completion_tokens/.test(m)) return callOpenAI(base, key, model, user, "max_completion_tokens");
-      throw new Error(`Error ${r.status}: ${m}`);
+      if (!opts.tokenParam && /max_completion_tokens/.test(m)) return callOpenAI(base, key, model, user, Object.assign({}, opts, { tokenParam: "max_completion_tokens" }));
+      if (!opts.fold && /developer instruction|system (role|message|prompt)|system_instruction/i.test(m)) return callOpenAI(base, key, model, user, Object.assign({}, opts, { fold: true }));
+      throw new Error(`Error ${(j.error && j.error.code) || r.status}: ${m}`);
     }
-    const c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
-    return typeof c === "string" ? c : Array.isArray(c) ? c.map(x => x.text || "").join("") : "";
+    const ch = j.choices && j.choices[0], msg = (ch && ch.message) || {}, text = textOf(msg.content);
+    if (!text.trim()) {
+      const reasoning = msg.reasoning || msg.reasoning_content, why = ch && ch.finish_reason;
+      throw new Error(reasoning || why === "length"
+        ? `The model${j.model ? " (" + j.model + ")" : ""} ran out of tokens while thinking and returned no answer. Choose a model that is not a reasoning model, or try again.`
+        : `The model${j.model ? " (" + j.model + ")" : ""} returned nothing${why ? " (finish reason: " + why + ")" : ""}. Try again or choose another model.`);
+    }
+    return Object.assign(new String(text), { model: j.model });   // keep the model name that really answered
   }
 
   $("aiRun").onclick = async () => {
@@ -129,9 +143,9 @@
       `Prompt to rewrite:\n${src}`;
     $("aiRun").disabled = true; status("Rewriting…");
     try {
-      const out = (p.kind === "anthropic" ? await callAnthropic(key, model, user) : await callOpenAI(baseUrl(p), key, model, user)).trim();
+      const res = p.kind === "anthropic" ? await callAnthropic(key, model, user) : await callOpenAI(baseUrl(p), key, model, user), out = String(res).trim();
       $("aiOut").value = out;
-      status(out ? "Done. Review it, then use or copy." : "The model returned nothing. Try another model.");
+      status(out ? "Done" + (res.model ? " (answered by " + res.model + ")" : "") + ". Review it, then use or copy." : "The model returned nothing. Try another model.");
       $("aiUse").style.display = scope === "scene" ? "" : "none";
     } catch (e) {
       const m = String(e.message || e);
