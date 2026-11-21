@@ -141,7 +141,7 @@
     const user = `Goal: ${GOALS[goal]}${extra ? "\nExtra instruction: " + extra : ""}\n\n` +
       (problems.length ? `Problems found by a checker (resolve them in your rewrite):\n${problems.join("\n")}\n\n` : "") +
       `Prompt to rewrite:\n${src}`;
-    $("aiRun").disabled = true; status("Rewriting…");
+    $("aiRun").disabled = true; status("Sending to " + (p.kind === "anthropic" ? "api.anthropic.com" : baseUrl(p).split("/")[2]) + " with " + model + "…");
     try {
       const res = p.kind === "anthropic" ? await callAnthropic(key, model, user) : await callOpenAI(baseUrl(p), key, model, user), out = String(res).trim();
       $("aiOut").value = out;
