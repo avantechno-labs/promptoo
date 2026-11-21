@@ -17,6 +17,6 @@ try{
   const t=q.get("t")!=null?+q.get("t"):.5;
   st.renderAt(t,0.016);st.renderAt(t,0.016);
   out.textContent="OK effects:"+st.active.length+" passes:"+(st.passes||[]).length+"\nerrors:"+JSON.stringify(st.errors)+"\nconsole:"+JSON.stringify(errs);
-  out.style.cssText="position:fixed;left:0;top:0;font:11px monospace;color:#9f9;background:#0008;padding:2px;max-width:100%";
+  if(q.get("clean")){out.style.display="none"}else out.style.cssText="position:fixed;left:0;top:0;font:11px monospace;color:#9f9;background:#0008;padding:2px;max-width:100%";
 }catch(e){out.textContent="THROW "+e.message+"\n"+e.stack}
 </script>

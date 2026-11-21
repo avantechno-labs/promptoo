@@ -1,0 +1,20 @@
+# Promptoo
+
+> Promptoo is a free, browser-based prompt builder for AI video and image generators, created by Avan Labs. You pick shot size, camera angle, camera movement, lens, lighting, style and location, see them in a live 3D preview, and copy a finished text prompt. No signup. Free for personal use; commercial use needs permission.
+
+## Key facts
+- Output: plain-text prompts for any text-to-video or text-to-image tool (for example Google Veo, OpenAI Sora, Kling, Runway, Luma, Pika, Midjourney). Promptoo is not affiliated with these companies.
+- Promptoo does not generate videos or images. The 3D preview is a planning aid with stand-in shapes.
+- Options: 10 shot sizes, 21 camera angles, 45 camera movements, 10 lenses, 15 lighting setups, 12 moods, 8 color grades, 39 locations, 46 visual styles, plus weather, seasons, eras, crowds and framing.
+- Includes a prompt checker that explains conflicting choices, a scene-by-scene editor, a character and template library, and recipes.
+- Optional "Rewrite with AI" uses the user's own API key. Projects are stored in the user's browser only.
+- Creator: Avan Labs (https://avanlabs.com)
+
+## Pages
+- [Home](https://promptoo.avanlabs.com/): what Promptoo is, features, FAQ
+- [Prompt builder](https://promptoo.avanlabs.com/app.html): the tool
+- [Camera movements guide](https://promptoo.avanlabs.com/camera-movements.html): 45 moves and how to word them
+- [Camera angles and shots guide](https://promptoo.avanlabs.com/camera-angles-and-shots.html): shot sizes and 21 angles
+- [Terms of use](https://promptoo.avanlabs.com/terms.html)
+- [Privacy policy](https://promptoo.avanlabs.com/privacy.html)
+- [Contact](https://promptoo.avanlabs.com/contact.html)
