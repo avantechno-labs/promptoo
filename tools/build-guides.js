@@ -22,9 +22,9 @@ function head({ file, title, desc, h1, ld }) {
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="author" content="Avan Labs">
 <meta name="theme-color" content="#0d1113">
-<link rel="canonical" href="${BASE}${file}">
+<link rel="canonical" href="${BASE}${file.replace(/\.html$/, "")}">
 <link rel="icon" type="image/png" href="img/favicon.png">
-<meta property="og:type" content="article"><meta property="og:site_name" content="Promptoo"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${BASE}${file}"><meta property="og:image" content="${BASE}img/og.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Promptoo"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${BASE}${file.replace(/\.html$/, "")}"><meta property="og:image" content="${BASE}img/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${BASE}img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
@@ -46,7 +46,7 @@ const tail = `<!--footer:start-->
 const cta = (txt) => `<section class="band"><div class="wrap"><h2>${txt}</h2><p>Open Promptoo, pick the option, and see it in the live 3D preview before you copy the prompt. Free, no signup.</p><a class="btn pri big" href="app.html">Try it in Promptoo</a></div></section>`;
 const article = (file, title, desc) => ({ "@context": "https://schema.org", "@graph": [
   { "@type": "Article", "headline": title, "description": desc, "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": { "@type": "Organization", "name": "Avan Labs", "url": "https://avanlabs.com" }, "publisher": { "@type": "Organization", "name": "Avan Labs", "url": "https://avanlabs.com" }, "mainEntityOfPage": BASE + file, "image": BASE + "img/og.png" },
-  { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Promptoo", "item": BASE }, { "@type": "ListItem", "position": 2, "name": title, "item": BASE + file }] }] });
+  { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Promptoo", "item": BASE }, { "@type": "ListItem", "position": 2, "name": title, "item": BASE + file.replace(/\.html$/, "") }] }] });
 
 /* ---------- camera movements ---------- */
 (function () {

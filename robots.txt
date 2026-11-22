@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /stage/*.html
+Disallow: /partials/
+Disallow: /tools/
 
 Sitemap: https://promptoo.avanlabs.com/sitemap.xml

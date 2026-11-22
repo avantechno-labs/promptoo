@@ -8,8 +8,8 @@
 <meta name="robots" content="index,follow">
 <meta name="author" content="Avan Labs">
 <meta name="theme-color" content="#0d1113">
-<link rel="canonical" href="https://promptoo.avanlabs.com/app.html">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Promptoo"><meta property="og:title" content="Promptoo Prompt Builder: Free AI Video and Image Prompts"><meta property="og:description" content="Pick camera moves, lenses, lighting and style, see them in 3D, copy the prompt. Free, no signup."><meta property="og:url" content="https://promptoo.avanlabs.com/app.html"><meta property="og:image" content="https://promptoo.avanlabs.com/img/og.png">
+<link rel="canonical" href="https://promptoo.avanlabs.com/app">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Promptoo"><meta property="og:title" content="Promptoo Prompt Builder: Free AI Video and Image Prompts"><meta property="og:description" content="Pick camera moves, lenses, lighting and style, see them in 3D, copy the prompt. Free, no signup."><meta property="og:url" content="https://promptoo.avanlabs.com/app"><meta property="og:image" content="https://promptoo.avanlabs.com/img/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Promptoo prompt builder with a live 3D preview"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Promptoo Prompt Builder: Free AI Video and Image Prompts"><meta name="twitter:description" content="Pick camera moves, lenses, lighting and style, see them in 3D, copy the prompt. Free, no signup."><meta name="twitter:image" content="https://promptoo.avanlabs.com/img/og.png">
 <link rel="stylesheet" href="footer.css">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,6 +155,8 @@ input.warnf,textarea.warnf{border-color:var(--warn) !important;box-shadow:0 0 0 
 .out{white-space:pre-wrap;min-height:90px;line-height:1.55}
 #sceneOut{font-size:13.5px}#fullOut{font:12px/1.6 var(--f-mono)}
 /* library + modals */
+.aimods{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 10px;max-height:132px;overflow:auto}.aimods .chip{font:12px var(--f-mono)}.aimods .chip.on{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}.aimods .chip small{opacity:.7;margin-left:6px}
+.aicmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.aipane{min-width:0}.aihead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}.aipane textarea{width:100%;box-sizing:border-box;resize:vertical;font:12.5px/1.5 var(--f-mono)}#aiOrig{background:transparent;color:var(--mut)}@media (max-width:760px){.aicmp{grid-template-columns:1fr}}
 .modal{position:fixed;inset:0;background:rgba(6,8,9,.72);backdrop-filter:blur(2px);z-index:40;display:grid;place-items:center;padding:20px}.modal[hidden]{display:none}
 .mp{background:var(--panel);width:min(1100px,100%);max-height:90vh;overflow:auto;border-radius:12px;border:1px solid var(--line);padding:18px}
 .mph{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.mph h3{margin:0;font:700 19px var(--f-disp);letter-spacing:-.01em;flex:1}
@@ -480,7 +482,7 @@ html[data-skin="anime"] button.pri.alt:hover{background:var(--sel)}
     </div>
     <div class="card pv-act2">
       <div class="bar"><button class="pri" id="copyScene">Copy scene</button><button class="pri alt" id="copyFull">Copy full prompt</button></div>
-      <div class="bar"><button class="ghost" id="viewPrompt">Prompt text ▾</button><button class="ghost" id="aiBtn">Rewrite with AI</button></div>
+      <div class="bar"><button class="ghost" id="viewPrompt">Prompt text ▾</button><button class="ghost" id="aiBtn">Rewrite using AI</button></div>
     </div>
   </aside>
 </main>
@@ -498,6 +500,7 @@ html[data-skin="anime"] button.pri.alt:hover{background:var(--sel)}
         <ul>
           <li><a href="app.html">Open the prompt builder</a></li>
           <li><a href="index.html">About Promptoo</a></li>
+          <li><a href="prompt-examples.html">Prompt examples</a></li>
           <li><a href="camera-movements.html">Camera movements guide</a></li>
           <li><a href="camera-angles-and-shots.html">Camera angles and shots guide</a></li>
         </ul>
@@ -538,13 +541,15 @@ html[data-skin="anime"] button.pri.alt:hover{background:var(--sel)}
     <select id="ltype" style="margin-left:auto"><option value="">All types</option><option value="scene">Scenes</option><option value="project">Projects</option><option value="character">Characters</option></select><input id="lq" placeholder="Search…" style="min-width:160px"></div>
   <div class="lgrid" id="libBody"></div>
 </div></div>
-<div class="modal" id="ai" hidden><div class="mp" style="max-width:720px">
-  <div class="mph"><h3>Rewrite with AI</h3><button id="aiClose">✕</button></div>
+<div class="modal" id="ai" hidden><div class="mp" style="max-width:1040px">
+  <div class="mph"><h3>Rewrite using AI</h3><button id="aiClose">✕</button></div>
   <p class="hint">Bring your own key. Your key stays in this browser. Your prompt text is sent to <b id="aiSend">the provider you chose</b> to be rewritten, and any usage is billed by that provider.</p>
   <div class="grid2">
    <label class="f">Provider<select id="aiProv"></select></label>
    <label class="f">Model<input id="aiModel" list="aiModels" placeholder="model name" autocomplete="off"><datalist id="aiModels"></datalist></label>
   </div>
+  <div class="bar" id="aiLoadRow" hidden style="margin:-2px 0 8px"><button type="button" class="ghost" id="aiLoad">Load free text models</button><span class="hint" id="aiLoadNote" role="status" aria-live="polite"></span></div>
+  <div id="aiLoadList" class="aimods" hidden></div>
   <label class="f" id="aiBaseRow">Base URL<input id="aiBase" placeholder="https://…/v1" autocomplete="off"></label>
   <label class="f" id="aiAcctRow" hidden>Cloudflare account ID<input id="aiAcct" placeholder="32-character account ID" autocomplete="off"></label>
   <label class="f" id="aiKeyRow">API key<input id="aiKey" type="password" placeholder="API key" autocomplete="off"></label>
@@ -552,19 +557,25 @@ html[data-skin="anime"] button.pri.alt:hover{background:var(--sel)}
   <label class="hint" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="aiRemember" style="width:auto"> Remember the key on this device (stored unencrypted in this browser)</label>
   <div class="grid2" style="margin-top:10px">
    <label class="f">What to rewrite<select id="aiScope"><option value="scene">This scene</option><option value="full">Full prompt (all scenes)</option></select></label>
-   <label class="f">Goal<select id="aiGoal"><option value="cinematic">More cinematic and vivid</option><option value="fix">Fix the problems found</option><option value="short">Shorter (under 70 words)</option><option value="veo">Style for Veo</option><option value="sora">Style for Sora</option><option value="kling">Style for Kling</option></select></label>
+   <label class="f">Goal<select id="aiGoal"><option value="structured">Keep my structure (same lines, better wording)</option><option value="cinematic">More cinematic and vivid</option><option value="fix">Fix the problems found</option><option value="short">Shorter (under 70 words)</option><option value="veo">Style for Veo</option><option value="sora">Style for Sora</option><option value="kling">Style for Kling</option></select></label>
   </div>
   <label class="f">Extra instruction (optional)<input id="aiCustom" placeholder="e.g. more tension, keep it under 80 words"></label>
   <div class="bar"><button class="pri" id="aiRun">Rewrite</button><span id="aiStatus" class="hint"></span></div>
-  <textarea id="aiOut" class="out" rows="9" placeholder="The rewritten prompt appears here. You can edit it." style="margin-top:10px"></textarea>
+  <details id="aiDet" hidden><summary class="hint" style="cursor:pointer">Details (what was sent and what came back)</summary><pre id="aiDebug" class="hint" style="white-space:pre-wrap;word-break:break-word;font-size:11px;max-height:170px;overflow:auto;margin:6px 0 0"></pre></details>
+  <div class="aicmp">
+   <div class="aipane"><div class="aihead"><b>Original</b><span class="hint" id="aiOrigN"></span></div><textarea id="aiOrig" class="out" rows="14" readonly aria-label="Original prompt"></textarea></div>
+   <div class="aipane"><div class="aihead"><b>Rewritten</b><span class="hint" id="aiOutN"></span></div><textarea id="aiOut" class="out" rows="14" placeholder="The rewritten prompt appears here. You can edit it." aria-label="Rewritten prompt"></textarea></div>
+  </div>
   <div class="bar"><button class="pri" id="aiUse">Use for this scene</button><button id="aiCopy">Copy</button></div>
 </div></div>
 <div class="toast" id="toast">Copied</div>
 
 <script src="styles.js"></script>
+<script src="examples.js"></script>
 <script src="camera.js"></script>
 <script src="rules.js"></script>
 <script src="steps.js"></script>
+<script src="motion.js"></script>
 <script>
 /* ======================= DATA ======================= */
 const G={
@@ -703,7 +714,7 @@ function mustSel(s){const o={},sel=(s&&s.sel)||{};for(const k in sel)o[k]=(sel[k
 function niceList(s){const sel=(s&&s.sel)||{};return Object.keys(sel).flatMap(k=>(sel[k]||[]).filter(v=>priOf(s,k,v)==="n"))}
 function effScene(s){const sel={},src=s.sel||{};for(const k in src)sel[k]=(src[k]||[]).filter(v=>priOf(s,k,v)!=="o");return Object.assign({},s,{sel})}
 function mustCount(s){const sel=s.sel||{};return Object.keys(sel).reduce((a,k)=>a+(sel[k]||[]).filter(v=>priOf(s,k,v)==="m").length,0)}
-const GW={season:1,crowd:1,trans:1,era:2,grade:2,mood:2,atmo:2,pace:2,lens:2,frame:2,place:3,facing:3,weather:3,time:3,loc:4,light:4,style:4,move:4,shot:5,angle:4};
+const GW={season:1,crowd:1,trans:1,era:2,grade:2,mood:2,atmo:2,pace:2,lens:2,frame:2,place:3,facing:3,weather:3,time:3,loc:4,light:4,style:4,move:4,shot:5,angle:4,act:4,spd:2,dirm:3,micro:1,bgm:2,rel:3};
 function trimScene(s){const b=S.budget||8,all=[];for(const k in (s.sel||{}))(s.sel[k]||[]).forEach(v=>{if(priOf(s,k,v)==="m")all.push([k,v,GW[k]||2])});
   all.sort((x,y)=>x[2]-y[2]);let m=all.length;s.pri=s.pri||{};for(const [k,v] of all){if(m<=b)break;s.pri[k+"|"+v]="n";m--}s.manual=null}
 function budgetHTML(s){const b=S.budget||8,m=mustCount(s),n=niceList(s).length;
@@ -716,8 +727,11 @@ function labeledText(s,i){
   let t=[o.shot?.length&&j("shot"),whoAction(s),s.setting&&"in "+s.setting.replace(/^in /,"")].filter(Boolean).join(" ").trim();
   if(t)t=t[0].toUpperCase()+t.slice(1)+".";
   const mods=[o.angle?.length&&"Angle: "+o.angle.map(x=>CAM.ANGW[x]||x).join(", "),o.move?.length&&"Camera: "+j("move"),o.lens?.length&&"Lens: "+j("lens"),o.light?.length&&"Lighting: "+j("light"),o.mood?.length&&"Mood: "+j("mood"),o.style?.length&&"Style: "+j("style"),o.grade?.length&&"Color grade: "+j("grade"),o.pace?.length&&"Pacing: "+j("pace")].filter(Boolean).map(m=>m+".");
-  const cr0=charRest(s);
-  let out=[t,cr0&&"Character details: "+cr0+".",...mods].filter(Boolean).join(" ");
+  const cr0=charRest(s),MW=window.MOTION?MOTION.word:x=>x;
+  const subjMove=[(o.act||[]).map(MW).join(" and "),o.spd?.[0]&&MW(o.spd[0]),o.dirm?.[0]&&MW(o.dirm[0])].filter(Boolean).join(" "),microT=(o.micro||[]).map(MW).join(", ");
+  const movL=(subjMove||microT)?"Movement: "+[subjMove,microT&&(subjMove?"with ":"")+microT].filter(Boolean).join(" ")+".":"";
+  const relL=[o.rel?.length&&"Camera and subject: "+MW(o.rel[0])+".",o.bgm?.length&&"Background movement: "+o.bgm.map(MW).join(", ")+"."].filter(Boolean);
+  let out=[t,cr0&&"Character details: "+cr0+".",movL,...mods,...relL].filter(Boolean).join(" ");
   const envp=["loc","era","time","weather","season","crowd"].map(k=>j(k)).filter(Boolean);
   if(envp.length||o.atmo?.length||(s.envText||"").trim())out+=` Environment: ${[...envp,j("atmo"),(s.envText||"").trim()].filter(Boolean).join(", ")}.`;
   const compl=[j("place"),j("facing"),j("frame")].filter(Boolean);
@@ -730,6 +744,9 @@ function labeledText(s,i){
 }
 const MOVEP={"static locked-off camera":"holds perfectly still on a locked-off frame","slow push-in":"slowly pushes in toward the subject","slow pull-out":"slowly pulls back to reveal the surroundings","pan left":"pans left","pan right":"pans right","tilt up":"tilts up","tilt down":"tilts down","tracking shot":"tracks alongside the subject","handheld shaky cam":"moves handheld with a slight natural shake","orbit around subject":"orbits smoothly around the subject","crane up":"cranes upward","drone fly-over":"flies over the scene like a drone","dolly zoom":"performs a dolly zoom, the background stretching behind the subject","whip pan":"whip-pans quickly","steadicam follow":"follows the subject with a smooth steadicam"};
 const SHOTW={"extreme wide shot":"Extreme wide shot, the subject a tiny figure in the vast scene:","wide establishing shot":"Wide establishing shot, the full scene visible and the subject small in frame:","medium shot":"Medium shot, subject framed from the waist up:","medium close-up":"Medium close-up, subject framed from the chest up:","close-up":"Close-up on the subject's face:","extreme close-up":"Extreme close-up, one detail filling the frame:"};
+const SHOTW_OBJ={"extreme wide shot":"Extreme wide shot, the subject tiny within the vast scene:","wide shot":"Wide shot, the whole subject with plenty of the surroundings visible:","full shot":"Full shot, the whole subject in frame:","medium wide shot":"Medium wide shot, the subject with some of its surroundings:","medium shot":"Medium shot, the subject framed at a comfortable distance:","medium close-up":"Medium close-up, the subject filling most of the frame:","close-up":"Close-up, the subject filling the frame:"};
+const PERSON=/\b(man|men|woman|women|girl|boy|person|people|child|children|kid|kids|teen|teenager|traveller|traveler|fisherman|astronaut|knight|samurai|figure|model|character|robot|android|chef|dancer|runner|soldier|king|queen|wizard|witch|pilot|doctor|nurse|teacher|student|artist|musician|singer|worker|farmer|monk|warrior|hunter|detective|courier|driver|cyclist|skater|swimmer|climber|explorer|hero|heroine|villain|lady|gentleman|baby|toddler|grandmother|grandfather|mother|father|couple|dog|cat|fox|horse|wolf|bear|bird|lion|tiger|rabbit|animal|creature|dragon|cowboy|pirate|sailor|captain|guard|thief|stranger|someone|she|he|they)\b/i;
+const isPerson=s=>!!charOf(s)||PERSON.test(s.subject||"")||!(s.subject||"").trim();
 Object.assign(SHOT,CAM.SHOT_EXTRA);Object.assign(MOVE,CAM.MOVE_EXTRA);Object.assign(MOVEP,CAM.MOVEP_EXTRA);Object.assign(SHOTW,CAM.SHOTW_EXTRA);
 function sceneParts(s,i){
   const o=mustSel(s),L=k=>k==="style"?(o[k]||[]).map(styleW):(o[k]||[]),and=a=>a.length>1?a.slice(0,-1).join(", ")+" and "+a[a.length-1]:a[0];
@@ -737,18 +754,25 @@ function sceneParts(s,i){
   const t=v=>(v||"").replace(/\s+/g," ").trim().replace(/[.,;:]+$/,"");
   const who=whoAction(s,t),shot=L("shot")[0];
   const mid=who.replace(/^(A|An|The)\s/,m=>m.toLowerCase());
-  let first=shot&&who?(SHOTW[shot]?`${SHOTW[shot]} ${mid}`:`${cap(shot)} of ${mid}`):shot?cap(shot):cap(who);
+  const SW=isPerson(s)?SHOTW:Object.assign({},SHOTW,SHOTW_OBJ);
+  let first=shot&&who?(SW[shot]?`${SW[shot]} ${mid}`:`${cap(shot)} of ${mid}`):shot?cap(shot):cap(who);
   const place=t(s.setting);
   if(place)first+=(first?" ":"")+(/^(in|on|at|under|near|inside|outside|above|below|beneath|across|by|through|over|beside|against|amid|among|along|beyond|behind|within)\b/i.test(place)?place:"in "+place);
   const P=[],add=(prose,line)=>{if(prose)P.push([prose,line||prose])};
   add(first&&first+".");
   const cr=charRest(s);if(cr)add("Character details: "+cr+".","Character: "+cr+".");
-  const envAll=[...["loc","era","time","weather","season","crowd"].flatMap(k=>L(k)),...(L("atmo").length?["with "+and(L("atmo"))]:[]),t(s.envText)].filter(Boolean);
+  const MW=window.MOTION?MOTION.word:x=>x,and2=a=>a.length>1?a.slice(0,-1).join(", ")+" and "+a[a.length-1]:a[0];
+  const subjMove=[L("act").map(MW).join(" and "),L("spd")[0]&&MW(L("spd")[0]),L("dirm")[0]&&MW(L("dirm")[0])].filter(Boolean).join(" ");
+  const microT=L("micro").map(MW);
+  if(subjMove||microT.length)add("Movement: "+[subjMove,microT.length&&(subjMove?"with ":"")+and2(microT)].filter(Boolean).join(" ")+".");
+  const envBase=["loc","era","time","weather","season","crowd"].flatMap(k=>L(k)),envAll=[...envBase,...(L("atmo").length?[(envBase.length?"with ":"")+and(L("atmo"))]:[]),t(s.envText)].filter(Boolean);
   if(envAll.length)add("Environment: "+envAll.join(", ")+".");
   const compAll=[...L("place"),...L("facing"),...L("frame")];
   if(compAll.length)add("Composition: "+compAll.join(", ")+".");
   if(L("angle").length){const a=and(L("angle").map(x=>CAM.ANGW[x]||x));add("Camera angle: "+a+".","Angle: "+a+".")}
   if(L("move").length){const m=and(L("move").map(x=>MOVEP[x]||x));add("The camera "+m+".","Camera: "+m+".")}
+  if(L("rel").length)add("Camera and subject: "+MW(L("rel")[0])+".");
+  if(L("bgm").length)add("Background movement: "+and(L("bgm").map(MW))+".");
   if(L("lens").length)add("Shot with "+and(L("lens"))+".","Lens: "+and(L("lens"))+".");
   if(L("light").length)add("Lighting: "+and(L("light"))+".");
   if(L("mood").length)add("The mood is "+and(L("mood"))+".","Mood: "+and(L("mood"))+".");
@@ -833,13 +857,21 @@ function refreshCheck(){const iss=check(sc());const c=document.querySelector(".c
 
 const STEPS=[["char","👤","Character"],["env","🌍","Environment"],["comp","📐","Composition"],["look","🎥","Look & camera"],["style","🎨","Style"]];
 const stepGroups=st=>Object.keys(G).filter(k=>(G[k].step||"look")===st);
-const stepBadge=(st,s)=>st==="char"?(s.char?1:0):stepGroups(st).reduce((a,k)=>a+((s.sel[k]||[]).length),0);
-function charStepHTML(s,c){
+const motGroups=()=>Object.keys(G).filter(k=>G[k].mot);
+const stepBadge=(st,s)=>st==="char"?(s.char?1:0)+motGroups().reduce((a,k)=>a+((s.sel[k]||[]).length),0):stepGroups(st).reduce((a,k)=>a+((s.sel[k]||[]).length),0);
+function motionCardHTML(s,iss){
+  const ks=motGroups().filter(k=>!S.hidden[k]);if(!ks.length)return"";
+  let cur=UI.tab.char;if(!ks.includes(cur))cur=ks[0];UI.tab.char=cur;
+  const tabs=ks.map(k=>{const n=(s.sel[k]||[]).length,r=sev(iss||[],k);return `<button class="gtab ${k===cur?"on":""}" data-gtab="${k}" role="tab" aria-selected="${k===cur}"><span>${esc(G[k].label)}</span>${n?`<em>${n}</em>`:""}${r?`<i class="dot ${r}"></i>`:""}</button>`}).join("");
+  return `<div class="card" style="margin-top:12px"><h2>Movement</h2><div class="hint" style="margin:-4px 0 10px">What the character does, how fast and which way, what moves in the background, and who moves relative to the camera. Camera moves are in Look &amp; camera.</div><div class="gtabs" role="tablist">${tabs}</div><div class="gbody" data-panel="${cur}">${groupPanelHTML(s,cur)}</div></div>`;
+}
+function charStepHTML(s,c,iss){
+  const mot=motionCardHTML(s,iss);
   const F=window.CHAR_FIELDS||[];
   const opts=`<option value="">No saved character (use the Who / what text above)</option>`+S.chars.map(x=>`<option value="${x.id}" ${s.char===x.id?"selected":""}>${esc(x.name||"Unnamed")}</option>`).join("")+`<option value="__new">＋ New character…</option>`;
   let h=`<div class="card"><div class="grid2"><label class="f">Character in this scene<select id="charSel">${opts}</select></label>
     <div class="bar" style="align-items:end;margin:0 0 9px"><button id="charNew">＋ New</button><button id="charLib">From library</button>${c?`<button id="charDup" title="Copy">⧉</button><button id="charSave">☆ Save to library</button><button id="charDel">Delete</button>`:""}</div></div>`;
-  if(!c){return h+`<p class="hint">Define a character once and reuse it in every scene, so the description stays identical. Or skip this and just type who / what above.</p></div>`}
+  if(!c){return h+`<p class="hint">Define a character once and reuse it in every scene, so the description stays identical. Or skip this and just type who / what above.</p></div>`+mot}
   const used=S.scenes.filter(x=>x.char===c.id).length;
   h+=`<label class="f">Character name (for you)<input id="c_name" value="${esc(c.name||"")}"></label>
     <div class="hint">Editing “${esc(c.name||"")}”. It is used in ${used} scene${used===1?"":"s"}, and changes apply to all of them.</div></div>`;
@@ -851,7 +883,7 @@ function charStepHTML(s,c){
     <label class="f">Character sheet / reference image (file name or link)<input id="c_ref" value="${esc(c.ref||"")}" placeholder="e.g. maya-character-sheet.png"></label>
     <p class="hint">Video models do not remember a character between clips. Make a character sheet in an image tool, then attach it in the video tool you use (as a reference or image-to-video input, where supported). Naming it here makes your prompt tell the model to follow it.</p>
     <label class="f" style="margin-bottom:4px">Description written into your prompt</label><div class="cprev">${esc(charDesc(c))}</div></div>`;
-  return h;
+  return h+mot;
 }
 UI.tab={};UI.fam={};UI.adv={};UI.gq="";UI.rec=false;
 const popOf=o=>window.CAM&&CAM.pop?CAM.pop[o]:0,famOfOpt=o=>window.CAM&&CAM.famOf?CAM.famOf[o]:"";
@@ -948,13 +980,13 @@ function renderPreview(s){
   const [aw,ah]=String(S.aspect||"16:9").split(":").map(Number),r=(aw/ah)||16/9;
   pv.style.aspectRatio=r;pv.style.width=r>=16/9?"100%":"auto";pv.style.height=r>=16/9?"auto":"100%";
   pv.innerHTML=composite(s).replace('class="th ','class="th live ');
-  const o=mustSel(s),bits=["loc","time","weather","season","era","atmo","crowd","place","facing","frame","shot","angle","move","lens","light","style","mood","pace","trans"].map(k=>(o[k]||[])[0]).filter(Boolean);
-  const ck=[["Who","field|f_subject",!!(s.subject||s.char)],["Doing","field|f_action",!!s.action],["Where","field|f_setting",!!s.setting],["Shot","look|shot",(o.shot||[]).length],["Move","look|move",(o.move||[]).length],["Light","look|light",(o.light||[]).length],["Style","style|style",(o.style||[]).length]];
+  const o=mustSel(s),bits=["loc","time","weather","season","era","atmo","crowd","bgm","act","dirm","place","facing","frame","shot","angle","move","lens","light","style","mood","pace","trans"].map(k=>(o[k]||[])[0]).filter(Boolean);
+  const ck=[["Who","field|f_subject",!!(s.subject||s.char)],["Doing","field|f_action",!!s.action||(o.act||[]).length>0],["Where","field|f_setting",!!s.setting],["Shot","look|shot",(o.shot||[]).length],["Move","look|move",(o.move||[]).length],["Light","look|light",(o.light||[]).length],["Style","style|style",(o.style||[]).length]];
   if($("pvCheck"))$("pvCheck").innerHTML=ck.map(([l,g,ok])=>`<button class="ck ${ok?"ok":""}" data-goto="${g}">${ok?"✓":"○"} ${l}</button>`).join("");
   $("pvCap").textContent=bits.length?bits.join(" · "):"Pick options and the look shows here.";$("pvCap").title=$("pvCap").textContent;
 }
 function stepBody(k,s){
-  if(k==="char"){const c=charOf(s);return c?`<span class="pill"><i>Character</i>${esc(c.name||"Unnamed")}</span>`:`<span class="hint">No character yet. Describe who is in the scene in the main panel.</span>`}
+  if(k==="char"){const c=charOf(s),mp=motGroups().flatMap(g=>(s.sel[g]||[]).map(v=>`<span class="pill"><i>${esc(G[g].label)}</i>${esc(v)}<u data-rm="${g}" data-o="${esc(v)}">×</u></span>`)).join("");return (c?`<span class="pill"><i>Character</i>${esc(c.name||"Unnamed")}</span>`:`<span class="hint">No character yet. Describe who is in the scene in the main panel.</span>`)+mp}
   const pills=stepGroups(k).flatMap(g=>(s.sel[g]||[]).map(v=>`<span class="pill"><i>${esc(G[g].label)}</i>${esc(v)}<u data-rm="${g}" data-o="${esc(v)}">×</u></span>`));
   return pills.join("")||`<span class="hint">Nothing picked yet.</span>`;
 }
@@ -995,7 +1027,7 @@ function renderEd(){
    <div class="sel${UI.picks?"":" shut"}">${picks.length?`<button class="ptog" data-picks="1" aria-expanded="${!!UI.picks}">${UI.picks?"▾ Hide picks":`▸ Show all ${picks.length} picks`}</button>`:""}${(UI.picks?picks:flagged).join("")||(picks.length?"":'<span class="hint">Nothing picked yet. Work through the steps below.</span>')}</div>
   </div></div></div>`;
   $("sceneCard").innerHTML=h;h="";
-  const body=S.step==="char"?charStepHTML(s,c):S.step==="style"?styleStepHTML(s):accHTML(s,S.step,iss);
+  const body=S.step==="char"?charStepHTML(s,c,iss):S.step==="style"?styleStepHTML(s):accHTML(s,S.step,iss);
   h=`<div class="qbar"><input id="gq" class="custom" type="search" placeholder="Search every option: dutch, rain, zoom, neon…" value="${esc(UI.gq)}" autocomplete="off"><button class="ghost" id="recBtn" aria-expanded="${UI.rec}">Recipes ${UI.rec?"▴":"▾"}</button></div>${UI.rec?recipesHTML():""}<div id="gRes">${searchHTML(UI.gq)}</div><div id="stepBody"${UI.gq.trim()?" hidden":""}>${body}</div>`;
   $("editor").innerHTML=h;markUI(iss);renderSteps();
 }
@@ -1145,7 +1177,7 @@ document.addEventListener("click",e=>{
   else if(id==="copyFull")copy($("fullOut").value);
   else if(id==="copyAll"){const v=fullText();copy(v,emptyScenes.length?`Copied. Left out empty scene${emptyScenes.length>1?"s":""} ${emptyScenes.join(", ")}`:`Copied all ${S.scenes.length} scene${S.scenes.length>1?"s":""} ✓`)}
   else if(id==="regen"){sc().manual=null;render(false)}
-  else if(id==="exportBtn"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(Object.assign({_notice:"Created on Promptoo by Avan Labs (https://promptoo.avanlabs.com). Free for personal use. Commercial use requires permission: https://promptoo.avanlabs.com/contact.html#commercial"},S),null,2)],{type:"application/json"}));a.download="promptoo-project.json";a.click()}
+  else if(id==="exportBtn"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(Object.assign({_notice:"Created on Promptoo by Avan Labs (https://promptoo.avanlabs.com). Free for personal use. Commercial use requires permission: https://promptoo.avanlabs.com/contact#commercial"},S),null,2)],{type:"application/json"}));a.download="promptoo-project.json";a.click()}
   else if(id==="importBtn")$("file").click();
   else if(id==="resetBtn"&&confirm("Clear all scenes?")){try{localStorage.removeItem(KEY)}catch(e){}S=def();render()}
 });
@@ -1198,7 +1230,16 @@ $("budget").onchange=e=>{S.budget=Math.min(30,Math.max(3,+e.target.value||8));re
 $("fantasy").onchange=e=>{S.fantasy=e.target.checked;render()};
 $("saveChar").onclick=()=>saveTpl("character");
 $("ltype").onchange=e=>{lib.type=e.target.value;renderLib()};
+/* app.html#ex=<id> opens an example from prompt-examples.html as a new scene */
+function loadExample(){const m=/^#ex=([\w-]+)/.exec(location.hash||"");if(!m||!window.EXAMPLES)return false;const e=EXAMPLES.find(x=>x.id===m[1]);if(!e)return false;
+  const s=Object.assign(blank(),{title:e.title,subject:e.subject,action:e.action,setting:e.setting,dur:e.dur||5,sel:clone(e.sel)});
+  const f=S.scenes[0],empty=S.scenes.length===1&&!f.subject&&!f.action&&!f.setting&&!Object.keys(f.sel||{}).some(k=>(f.sel[k]||[]).length);
+  if(empty)S.scenes[0]=s;else S.scenes.push(s);S.cur=S.scenes.length-1;S.step="look";UI.vsOpen=false;
+  try{history.replaceState(null,"",location.pathname+location.search)}catch(x){}return true}
+const exLoaded=loadExample();
 render();
+if(exLoaded)toast("Example loaded: you can change anything ✓");
+window.addEventListener("hashchange",()=>{if(loadExample()){render();toast("Example loaded ✓")}});
 </script>
 <script>(function(){const b=document.getElementById("skinBtn"),r=document.documentElement;
 const label=()=>{b.textContent=r.dataset.skin==="anime"?"Classic theme":"Anime theme"};label();
@@ -1207,7 +1248,7 @@ b.onclick=()=>{const v=r.dataset.skin==="anime"?"":"anime";if(v)r.dataset.skin=v
 <script src="vendor/three.min.js"></script><script src="vendor/EffectComposer.js"></script><script src="vendor/CopyShader.js"></script><script src="vendor/ShaderPass.js"></script><script src="vendor/RenderPass.js"></script><script src="vendor/MaskPass.js"></script>
 <script src="vendor/LuminosityHighPassShader.js"></script><script src="vendor/UnrealBloomPass.js"></script><script src="vendor/BokehShader.js"></script><script src="vendor/BokehPass.js"></script>
 <script src="stage/core.js"></script><script src="stage/passes.js"></script><script src="stage/dummy.js"></script>
-<script src="effects/camera.js"></script><script src="effects/world.js"></script><script src="effects/places.js"></script><script src="effects/compose.js"></script><script src="effects/look.js"></script><script src="stage/packs.js"></script>
+<script src="effects/camera.js"></script><script src="effects/world.js"></script><script src="effects/places.js"></script><script src="effects/compose.js"></script><script src="effects/look.js"></script><script src="effects/motion.js"></script><script src="stage/packs.js"></script>
 <script src="stage/bridge.js"></script>
 <script src="ai.js"></script>
 </body>

@@ -11,7 +11,7 @@
  *        APP_KEY         any long random string. Paste the same string into Promptoo's key box.
  *        ALLOWED_ORIGIN  the origin you open Promptoo from, e.g. https://promptoo.example.com
  *                        (leave unset to allow any origin; "null" is what a local file:// page sends)
- *   4. In Promptoo: Rewrite with AI -> provider "Cloudflare Worker (your own)" -> paste the Worker URL.
+ *   4. In Promptoo: Rewrite using AI -> provider "Cloudflare Worker (your own)" -> paste the Worker URL.
  *
  * wrangler.toml snippet:
  *   name = "promptoo-ai"

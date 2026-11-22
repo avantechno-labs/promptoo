@@ -1,9 +1,9 @@
-<!doctype html><meta charset="utf-8"><body style="margin:0;background:#222">
+<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><body style="margin:0;background:#222">
 <pre id="o" style="color:#9f9;font:12px monospace;white-space:pre-wrap">pending</pre>
 <script src="../vendor/three.min.js"></script><script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script><script src="../vendor/MaskPass.js"></script>
 <script src="../vendor/LuminosityHighPassShader.js"></script><script src="../vendor/UnrealBloomPass.js"></script><script src="../vendor/BokehShader.js"></script><script src="../vendor/BokehPass.js"></script>
 <script src="core.js"></script><script src="passes.js"></script><script src="dummy.js"></script>
-<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script>
+<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script><script src="../motion.js"></script><script src="../effects/motion.js"></script>
 <script>
 const errs=[];const ce=console.error,cw=console.warn;console.error=(...a)=>{errs.push("E "+a.join(" ").slice(0,300));ce(...a)};console.warn=(...a)=>{errs.push("W "+a.join(" ").slice(0,300));cw(...a)};
 window.addEventListener("error",e=>errs.push("ERR "+e.message));

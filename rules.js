@@ -202,6 +202,35 @@
   }
 
 
+  /* ---- movement: what the character does, the background, and who moves relative to the camera ---- */
+  const GO = ["walking", "running", "jogging", "climbing", "stumbling"];
+  const BIG = ["jumping", "dancing", "fighting", "falling", "spinning around", "kneeling", "crouching", "sitting down", "standing up", "picking something up", "opening a door"];
+  const DIRS = ["toward the camera", "away from the camera", "left to right", "right to left", "diagonally toward the camera", "in a circle", "into the distance", "up a slope or stairs"];
+  X(E, ["act", ["standing still"]], ["act", GO], "“Standing still” and a moving action contradict each other. Keep one.");
+  X(W, ["act", ["walking"]], ["act", ["running", "jogging"]], "Walking and running are two different gaits. Keep one, or the model blends them into an odd shuffle.");
+  X(W, ["act", ["sitting down"]], ["act", ["standing up"]], "Sitting down and standing up are opposite motions. Choose one for a short clip.");
+  X(W, ["act", ["sitting down", "kneeling", "crouching"]], ["act", ["running", "jumping", "jogging", "climbing"]], "A low pose and a fast action cannot happen together. Make one a separate scene.");
+  X(W, ["act", ["falling", "stumbling"]], ["act", ["dancing", "waving", "laughing", "talking with hand gestures", "drinking from a cup"]], "A fall or a stumble does not mix with a relaxed gesture.");
+  X(W, ["act", ["standing still", "leaning on a wall", "sitting down"]], ["spd", ["hurried", "frantic, full speed", "brisk"]], "A speed of “hurried” or “frantic” implies travel, but the character is set to stay put. Pick a moving action or a calmer speed.");
+  X(W, ["act", ["standing still"]], ["dirm", DIRS], "A direction of travel needs a character who moves. “Standing still” cancels it.");
+  X(E, ["dirm", ["toward the camera"]], ["facing", ["back to the camera", "walking away from the camera"]], "Moving toward the camera, but the character is set to face away from it. Pick one.");
+  X(E, ["dirm", ["away from the camera"]], ["facing", ["facing the camera", "walking toward the camera"]], "Moving away from the camera, but the character is set to face it. Pick one.");
+  X(W, ["dirm", ["toward the camera"]], ["angle", ["from-behind angle"]], "The camera is behind the character, who is meant to walk toward it. They would have to turn around.");
+  X(E, ["rel", ["subject moves, camera locked off"]], ["move", NOSTATIC], "“Camera locked off” means no camera move, which contradicts the camera move you chose.");
+  X(E, ["rel", ["subject still, camera moves"]], ["move", ["static locked-off camera"]], "The camera should move around a still subject, but the camera is set to static.");
+  X(W, ["rel", ["subject still, camera moves"]], ["act", GO], "The subject is meant to stay still, but a moving action is picked. Remove one.");
+  X(E, ["rel", ["camera follows the subject", "camera and subject move together"]], ["move", ["static locked-off camera"]], "The camera is meant to follow the subject, but it is set to static.");
+  X(W, ["rel", ["camera follows the subject", "camera and subject move together"]], ["act", ["standing still", "leaning on a wall"]], "There is nothing to follow: the character stays put.");
+  X(W, ["rel", ["subject enters the frame", "subject leaves the frame"]], ["act", ["standing still", "sitting down", "leaning on a wall"]], "Entering or leaving the frame needs a moving character.");
+  X(W, ["rel", ["subject enters the frame", "subject leaves the frame"]], ["move", ["orbit around subject", "tracking shot", "steadicam follow", "chase shot"]], "A follow or orbit keeps the subject in frame, so it cannot enter or leave it.");
+  X(E, ["bgm", ["a frozen, still background"]], ["bgm", ["people walking past", "traffic passing", "trees swaying", "clouds drifting", "water rippling", "waves rolling in", "fire flickering"]], "A frozen background and a moving background contradict each other. Keep one.");
+  X(W, ["bgm", ["a frozen, still background"]], ["atmo", ["falling snow", "rain streaks", "drifting smoke", "falling leaves", "confetti", "falling ash", "cherry blossom petals", "floating embers"]], "The background is frozen, but you also asked for falling or drifting particles.");
+  X(W, ["bgm", ["a frozen, still background"]], ["crowd", ["busy bustling crowd", "packed crowd", "traffic and vehicles passing"]], "The background is frozen, but the crowd or traffic is meant to be busy.");
+  X(W, ["bgm", ["people walking past", "people moving in the distance"]], ["crowd", ["empty and deserted", "single lone figure"]], "People are meant to walk past, but the crowd is set to empty or a lone figure.");
+  X(W, ["micro", ["breath visible in the cold air"]], ["season", ["summer", "midsummer heat"]], "Visible breath needs cold air, which does not fit a summer or hot setting.");
+  X(W, ["micro", ["hair blowing in the wind", "clothes rippling in the wind"]], ["act", ["sitting down", "kneeling"]], "Wind effects are easy to lose on a seated or kneeling figure. Keep them for standing or walking shots.");
+  X(W, ["pace", ["time-lapse", "fast cuts"]], ["micro", ["breathing visibly", "blinking naturally", "a subtle smile forming", "a slow exhale", "jaw clenching", "tears forming"]], "Tiny details disappear in time-lapse or fast cuts. Use slower pacing or drop them.");
+  X(W, ["pace", ["slow motion"]], ["spd", ["frantic, full speed", "hurried"]], "Slow motion and a frantic speed pull in opposite directions. The model will pick one.");
   /* ---- camera vocabulary (moves, zooms, angles) ---- */
   if (CAM) {
     CAM.OPPOSITES.forEach(([a, b]) => X(E, ["move", [a]], ["move", [b]], `“${a}” and “${b}” are opposite moves and cancel each other. Keep one.`));
@@ -218,6 +247,20 @@
   }
 
   const fns = [];
+  fns.push((s) => {
+    const sel = s.sel || {}, a = sel.act || [], out = [];
+    if (a.length > 2) out.push({ l: W, targets: a.map(v => ({ g: "act", v })), msg: "More than two actions in one short clip is hard for a model to show. Split them into separate scenes." });
+    const big = a.filter(v => BIG.includes(v));
+    if (big.length >= 2 && a.length <= 2) out.push({ l: T, targets: big.map(v => ({ g: "act", v })), msg: "Two big actions at once rarely both appear. Pick one, or make them two scenes." });
+    if (a.length && (s.action || "").trim()) out.push({ l: T, targets: [{ g: "action", v: s.action }].concat(a.map(v => ({ g: "act", v }))), msg: "You have both a “Doing what” text and action picks. They are combined in the prompt, so make sure they do not repeat or contradict each other." });
+    return out;
+  });
+  fns.push((s) => {
+    const sel = s.sel || {}, n = ["act", "spd", "dirm", "micro", "bgm", "rel"].reduce((x, k) => x + (sel[k] || []).length, 0);
+    if (n > 7) return [{ l: T, targets: [], msg: `You picked ${n} movement options. Models follow a few movements well and drop the rest. Keep the ones that matter most.` }];
+    return [];
+  });
+
   fns.push((s, S) => {
     const fields = [["action", s.action], ["setting", s.setting], ["subject", s.subject], ["envText", s.envText]];
     const re = /\b(cinematic (shot|camera)|dynamic (camera|shot|movement)|epic shot|amazing|stunning|beautiful shot|high quality|masterpiece)\b/i;

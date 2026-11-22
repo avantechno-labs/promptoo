@@ -10,6 +10,7 @@ effects/camera.js  shot sizes, angles, lenses, camera moves
 effects/world.js   time of day, lighting, mood, color grade, weather, season, atmosphere
 effects/places.js  locations, eras, crowds
 effects/compose.js placement, facing, framing guides, pacing, transitions
+effects/motion.js character action, speed, direction, small details, background movement, camera vs subject (option lists in motion.js)
 effects/look.js    visual styles (post chains and material swaps)
 stage/packs.js     the same thing as JSON, for users (no code)
 ```
@@ -18,7 +19,7 @@ stage/packs.js     the same thing as JSON, for users (no code)
 
 ```js
 Stage3D.register({
-  group: "move",                    // shot, angle, lens, move, light, mood, grade, time, weather, season, atmo,
+  group: "move",                    // shot, angle, lens, move, light, mood, grade, time, weather, season, atmo, act, spd, dirm, micro, bgm, rel,
                                     // loc, era, crowd, place, facing, frame, pace, trans, style
   name:  "my slow slide",           // the option value stored in a scene
   ui:    { tip: "Glide, then settle", w: "glides sideways and settles", fam: "phys", pop: 0 },

@@ -33,13 +33,13 @@
   "@graph": [
     { "@type": "Organization", "@id": "https://avanlabs.com/#org", "name": "Avan Labs", "url": "https://avanlabs.com", "logo": "https://promptoo.avanlabs.com/img/logo.png" },
     { "@type": "WebSite", "@id": "https://promptoo.avanlabs.com/#site", "name": "Promptoo", "url": "https://promptoo.avanlabs.com/", "publisher": { "@id": "https://avanlabs.com/#org" }, "inLanguage": "en" },
-    { "@type": "SoftwareApplication", "@id": "https://promptoo.avanlabs.com/#app", "name": "Promptoo", "url": "https://promptoo.avanlabs.com/app.html",
+    { "@type": "SoftwareApplication", "@id": "https://promptoo.avanlabs.com/#app", "name": "Promptoo", "url": "https://promptoo.avanlabs.com/app",
       "applicationCategory": "MultimediaApplication", "operatingSystem": "Web browser", "browserRequirements": "Requires a modern browser. WebGL is needed for the 3D preview.",
       "description": "A free, browser-based prompt builder for AI video and image generators. Choose shot size, camera angle, camera movement, lens, lighting, location and visual style, preview them in 3D, and copy a finished prompt.",
       "image": "https://promptoo.avanlabs.com/img/og.png", "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for personal use. Commercial use requires permission." },
       "creator": { "@id": "https://avanlabs.com/#org" }, "publisher": { "@id": "https://avanlabs.com/#org" },
-      "featureList": ["Scene by scene prompt builder", "Live 3D preview of camera moves, lenses, lighting and styles", "Prompt checker that explains conflicting choices", "More than 300 options with previews", "Template and character library", "Optional Rewrite with AI using your own API key", "No signup, runs in your browser"] },
+      "featureList": ["Scene by scene prompt builder", "Live 3D preview of camera moves, lenses, lighting and styles", "Prompt checker that explains conflicting choices", "More than 300 options with previews", "Template and character library", "Optional Rewrite using AI using your own API key", "No signup, runs in your browser"] },
     { "@type": "HowTo", "name": "How to build an AI video prompt with Promptoo", "totalTime": "PT5M",
       "step": [
         { "@type": "HowToStep", "name": "Describe the scene", "text": "Write who or what is in the scene, what they are doing and where. Or build a character card and reuse it." },
@@ -69,6 +69,7 @@
     <nav class="sh-nav" aria-label="Main">
       <a href="index.html#features">Features</a>
       <a href="index.html#how">How it works</a>
+      <a href="prompt-examples.html">Examples</a>
       <a href="camera-movements.html">Guides</a>
       <a href="index.html#faq">FAQ</a>
       <a href="contact.html">Contact</a>
@@ -137,7 +138,7 @@
       <div class="card"><h3>Scene by scene</h3><p>Build a whole video as separate scenes with durations. Copy one scene or the full prompt. Keep the same look across scenes with one click.</p></div>
       <div class="card"><h3>Characters and templates</h3><p>Describe a character once, star the details the video must not miss, and reuse them. Save scenes and projects to your own library.</p></div>
       <div class="card"><h3>Recipes</h3><p>Start from a proven combination such as a luxury product reveal, a tense chase or a quiet dialogue, then change what you like.</p></div>
-      <div class="card"><h3>Rewrite with AI (optional)</h3><p>Use your own API key with Anthropic, OpenRouter, Groq, Gemini, a local model or any OpenAI-compatible service to polish the wording. Your key stays in your browser.</p></div>
+      <div class="card"><h3>Rewrite using AI (optional)</h3><p>Use your own API key with Anthropic, OpenRouter, Groq, Gemini, a local model or any OpenAI-compatible service to polish the wording. Your key stays in your browser.</p></div>
       <div class="card"><h3>Private by design</h3><p>No account, no server for your projects. Everything is saved in your browser and you can export it as a file.</p></div>
       <div class="card"><h3>Add your own effects</h3><p>Add your own camera moves, lights, particles and looks with a few lines of JSON, or write a plug-in for the 3D stage.</p></div>
     </div>
@@ -168,7 +169,7 @@
         <li><b>Light:</b> golden hour, neon, candlelight, Rembrandt, rim light, god rays</li>
         <li><b>World:</b> time of day, weather, seasons, particles, eras, crowds</li>
       </ul>
-      <p><a class="btn" href="camera-movements.html">Read the camera movements guide</a></p>
+      <p><a class="btn pri" href="prompt-examples.html">See 29 prompt examples</a> <a class="btn" href="camera-movements.html">Read the camera movements guide</a></p>
     </div>
     <div>
       <img class="shot" src="img/styles.webp" width="1400" height="662" alt="Twelve visual styles of the same scene in Promptoo's 3D preview: cinematic, anime, flat cartoon, ink silhouette, 8-bit, watercolor, pencil sketch, claymation, VHS, toy miniature, manga and oil painting" loading="lazy">
@@ -213,7 +214,7 @@
     <details><summary>Does Promptoo generate videos or images?</summary><p>No. Promptoo writes the prompt. The 3D preview is a planning aid that shows framing, camera movement and light with simple stand-in shapes. The final result depends on the AI tool you use, so expect it to differ.</p></details>
     <details><summary>How do I write a good AI video prompt?</summary><p>Describe the subject, what it does, and where. Then add the camera (shot size, angle, movement), the lighting and the visual style. Keep each scene to one main action, avoid contradictions, and avoid vague words like "cinematic shot". Promptoo builds this structure for you and checks it.</p></details>
     <details><summary>Where is my data stored?</summary><p>Your prompts, scenes and templates stay in your browser, on your device. Promptoo has no accounts and no server for your projects. You can export a project as a file and import it later. See the <a href="privacy.html">privacy policy</a>.</p></details>
-    <details><summary>What is "Rewrite with AI"?</summary><p>An optional button that sends your prompt to an AI provider you choose, using your own API key, and returns a polished version. Your key stays in your browser. You can ignore it and use Promptoo without any AI service.</p></details>
+    <details><summary>What is "Rewrite using AI"?</summary><p>An optional button that sends your prompt to an AI provider you choose, using your own API key, and returns a polished version. Your key stays in your browser. You can ignore it and use Promptoo without any AI service.</p></details>
     <details><summary>Can I use Promptoo commercially?</summary><p>Commercial use needs permission from Avan Labs. Tell us how you plan to use it on the <a href="contact.html#commercial">contact page</a>. See the <a href="terms.html">terms of use</a>.</p></details>
     <details><summary>Can I add my own camera moves, lights or styles?</summary><p>Yes. Add your own styles in the Style tab, or add effects with a few lines of JSON in Project settings. Developers can write plug-ins for the 3D stage.</p></details>
   </div>
@@ -242,6 +243,7 @@
         <ul>
           <li><a href="app.html">Open the prompt builder</a></li>
           <li><a href="index.html">About Promptoo</a></li>
+          <li><a href="prompt-examples.html">Prompt examples</a></li>
           <li><a href="camera-movements.html">Camera movements guide</a></li>
           <li><a href="camera-angles-and-shots.html">Camera angles and shots guide</a></li>
         </ul>

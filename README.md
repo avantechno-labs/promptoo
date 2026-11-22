@@ -18,6 +18,7 @@ Live at https://promptoo.avanlabs.com
 ## Keeping things consistent
 - **Header and footer** live in `partials/`. After editing them run `python tools/stamp.py` to copy them into every page.
 - **Guides** are generated from `camera.js` and `app.html`: `node tools/build-guides.js`, then `python tools/stamp.py`.
+- **Prompt examples** live in `examples.js`. Add one there, then run `node tools/build-examples.js` (needs `npm i jsdom`) and `python tools/stamp.py`. The builder refuses an example that has checker warnings, more than 8 picks or an unknown option. A link `app.html#ex=<id>` opens an example in the tool.
 - **Site check** (links, anchors, titles, descriptions, structured data): `node tools/check-site.js`.
 - Footer links, projects list and copyright line: `partials/footer.html`.
 

@@ -106,3 +106,24 @@ table.facts tr:last-child th,table.facts tr:last-child td{border-bottom:0}
 .item .w{color:var(--mut);font-size:14px;margin:0}
 .item code{font:500 13px ui-monospace,Consolas,monospace;color:var(--acc);background:var(--sel);padding:2px 6px;border-radius:6px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* prompt examples page */
+.toc{display:flex;flex-wrap:wrap;gap:8px 10px;list-style:none;padding:0;margin:0 0 1.4em}
+.toc li{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+.toc a{text-decoration:none}.toc .meta{color:var(--mut);margin-left:4px}
+.exsec{margin-top:1.2em;scroll-margin-top:84px}
+.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,430px),1fr));gap:18px;align-items:start}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0;scroll-margin-top:84px}
+.ex:target{border-color:var(--acc);box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 30%,transparent)}
+.ex h3{margin:6px 0 .4em;font-size:1.12rem}
+.ex-top{display:flex;gap:10px;align-items:center}
+.ex .tag{font:600 11px var(--f-ui);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+.ex .tag.video{color:var(--acc);border-color:color-mix(in srgb,var(--acc) 50%,var(--line))}
+.ex .meta{color:var(--mut);font-size:13px}
+.ex .why{color:var(--mut);font-size:15px;margin-bottom:.8em}
+.ex pre.prompt{white-space:pre-wrap;word-break:break-word;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 .8em;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-height:340px;overflow:auto}
+.ex .picks{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 1em}
+.ex .chip{font-size:12px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+.ex .chip i{font-style:normal;color:var(--mut);margin-right:2px}
+.ex-actions{display:flex;flex-wrap:wrap;gap:10px}
+.ex-actions .btn{padding:9px 16px;font-size:14px}

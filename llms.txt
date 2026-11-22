@@ -7,14 +7,15 @@
 - Promptoo does not generate videos or images. The 3D preview is a planning aid with stand-in shapes.
 - Options: 10 shot sizes, 21 camera angles, 45 camera movements, 10 lenses, 15 lighting setups, 12 moods, 8 color grades, 39 locations, 46 visual styles, plus weather, seasons, eras, crowds and framing.
 - Includes a prompt checker that explains conflicting choices, a scene-by-scene editor, a character and template library, and recipes.
-- Optional "Rewrite with AI" uses the user's own API key. Projects are stored in the user's browser only.
+- Optional "Rewrite using AI" uses the user's own API key. Projects are stored in the user's browser only.
 - Creator: Avan Labs (https://avanlabs.com)
 
 ## Pages
 - [Home](https://promptoo.avanlabs.com/): what Promptoo is, features, FAQ
-- [Prompt builder](https://promptoo.avanlabs.com/app.html): the tool
-- [Camera movements guide](https://promptoo.avanlabs.com/camera-movements.html): 45 moves and how to word them
-- [Camera angles and shots guide](https://promptoo.avanlabs.com/camera-angles-and-shots.html): shot sizes and 21 angles
-- [Terms of use](https://promptoo.avanlabs.com/terms.html)
-- [Privacy policy](https://promptoo.avanlabs.com/privacy.html)
-- [Contact](https://promptoo.avanlabs.com/contact.html)
+- [Prompt builder](https://promptoo.avanlabs.com/app): the tool
+- [Prompt examples](https://promptoo.avanlabs.com/prompt-examples): 29 copy-ready AI video and image prompts, each opens in the builder
+- [Camera movements guide](https://promptoo.avanlabs.com/camera-movements): 45 moves and how to word them
+- [Camera angles and shots guide](https://promptoo.avanlabs.com/camera-angles-and-shots): shot sizes and 21 angles
+- [Terms of use](https://promptoo.avanlabs.com/terms)
+- [Privacy policy](https://promptoo.avanlabs.com/privacy)
+- [Contact](https://promptoo.avanlabs.com/contact)

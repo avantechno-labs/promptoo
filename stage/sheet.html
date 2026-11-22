@@ -1,9 +1,9 @@
-<!doctype html><meta charset="utf-8"><body style="margin:0;background:#111;color:#ddd;font:11px sans-serif">
+<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><body style="margin:0;background:#111;color:#ddd;font:11px sans-serif">
 <div id="g" style="display:flex;flex-wrap:wrap;gap:4px;padding:4px"></div><pre id="o" style="position:fixed;right:0;bottom:0;margin:0;background:#000a;color:#9f9">...</pre>
 <script src="../vendor/three.min.js"></script><script src="../vendor/EffectComposer.js"></script><script src="../vendor/CopyShader.js"></script><script src="../vendor/ShaderPass.js"></script><script src="../vendor/RenderPass.js"></script><script src="../vendor/MaskPass.js"></script>
 <script src="../vendor/LuminosityHighPassShader.js"></script><script src="../vendor/UnrealBloomPass.js"></script><script src="../vendor/BokehShader.js"></script><script src="../vendor/BokehPass.js"></script>
 <script src="core.js"></script><script src="passes.js"></script><script src="dummy.js"></script><script src="packs.js"></script>
-<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script>
+<script src="../effects/camera.js"></script><script src="../effects/world.js"></script><script src="../effects/places.js"></script><script src="../effects/compose.js"></script><script src="../effects/look.js"></script><script src="../motion.js"></script><script src="../effects/motion.js"></script>
 <script>
 const q=new URLSearchParams(location.search);const g=q.get("g");const base=q.get("base")?JSON.parse(q.get("base")):{};const tt=q.get("t")!=null?+q.get("t"):.5;
 const SELS=q.get("sels")?JSON.parse(q.get("sels")):null;const names=SELS?SELS.map(x=>x.label):(q.get("names")?q.get("names").split("|"):Stage3D.names(g));const W=+q.get("w")||256,H=Math.round(W*9/16);

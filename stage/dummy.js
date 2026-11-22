@@ -89,6 +89,7 @@
       else { arms[0].rotation.x = -Math.sin(ph) * swing * .9; arms[1].rotation.x = Math.sin(ph) * swing * .9; if (!sub.walking && !sub.forceWalk) { const tt = c ? c.time : 0; torso.scale.y = 1 + Math.sin(tt * 1.6) * .006; } }
       if (sub.walking || sub.forceWalk) body.position.y = Math.abs(Math.sin(ph)) * .02 * (mode === "run" ? 2 : 1);
       head.rotation.y = rad(sub.lookYaw); head.rotation.x = rad(sub.lookPitch);
+      if (sub.mot && S.motion) S.motion(sub, t, dt, c);   // movement options (effects/motion.js) pose the figure on top
     };
     root.position.copy(sub.home); root.traverse(o => { o.castShadow = true; });
     function rad(d) { return d * Math.PI / 180; }

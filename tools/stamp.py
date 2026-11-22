@@ -4,7 +4,7 @@
    Edit partials/header.html or partials/footer.html, run this, commit. Pages that have no markers are left alone."""
 import io, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGES = ["index.html", "app.html", "terms.html", "privacy.html", "contact.html", "camera-movements.html", "camera-angles-and-shots.html", "404.html"]
+PAGES = ["index.html", "app.html", "terms.html", "privacy.html", "contact.html", "camera-movements.html", "camera-angles-and-shots.html", "prompt-examples.html", "404.html"]
 def read(p):
     with io.open(os.path.join(ROOT, p), encoding="utf-8") as f: return f.read()
 def write(p, t):
