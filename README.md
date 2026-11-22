@@ -6,7 +6,7 @@ Promptoo is a free prompt builder for AI video and image generators such as Goog
 
 **Try it: https://promptoo.avanlabs.com**
 
-[![Promptoo prompt builder: scenes, live 3D preview and steps](https://yjegbhwixyxrxcxifiqd.supabase.co/storage/v1/object/sign/avanlink-gallery/avanlink_shares/3cb67722-eef5-45d0-9ef7-b44f0afe10ef/34364a46-aa8b-47dc-a5f6-7dfc64baf487.png?token=eyJraWQiOiJjMmIyNzRiYi1jMTZlLTRhMWItOWIyMC1hOWI5ZTNiN2QxMTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdmFubGluay1nYWxsZXJ5L2F2YW5saW5rX3NoYXJlcy8zY2I2NzcyMi1lZWY1LTQ1ZDAtOWVmNy1iNDRmMGFmZTEwZWYvMzQzNjRhNDYtYWE4Yi00N2RjLWE1ZjYtN2RmYzY0YmFmNDg3LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTUzMTMyNDgsImV4cCI6MTgyNjg0OTI0OH0.yEP2zS-EC8cEpDCgLAWlRtmMgG1OM0p4gWASIG0ZOCw)](https://promptoo.avanlabs.com)
+[![Promptoo prompt builder: scenes, live 3D preview and steps](https://yjegbhwixyxrxcxifiqd.supabase.co/storage/v1/object/sign/avanlink-gallery/avanlink_shares/3cb67722-eef5-45d0-9ef7-b44f0afe10ef/6d7561ff-5842-45f5-a158-1cd5a15ab7bc.png?token=eyJraWQiOiJjMmIyNzRiYi1jMTZlLTRhMWItOWIyMC1hOWI5ZTNiN2QxMTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdmFubGluay1nYWxsZXJ5L2F2YW5saW5rX3NoYXJlcy8zY2I2NzcyMi1lZWY1LTQ1ZDAtOWVmNy1iNDRmMGFmZTEwZWYvNmQ3NTYxZmYtNTg0Mi00NWY1LWExNTgtMWNkNWExNWFiN2JjLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTUzMTM4NzksImV4cCI6MTgyNjg0OTg3OX0.wHvzcw0Rs6oEOJqtwSb9n6_ZF1L1xfEaOMGK5yjrswY)](https://promptoo.avanlabs.com)
 
 ## Why Promptoo
 

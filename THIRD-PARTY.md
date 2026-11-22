@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 ## Fonts
 
-Inter, Space Grotesk and Poppins are loaded from Google Fonts by the pages. They are not stored in this repository and are available under the SIL Open Font License.
+Inter, Space Grotesk, JetBrains Mono, Poppins and Anton are loaded from Google Fonts by the pages. They are not stored in this repository and are available under the SIL Open Font License.
 
 ## Not covered by the Promptoo licence
 
