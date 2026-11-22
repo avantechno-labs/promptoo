@@ -1,0 +1,40 @@
+# Third-party software
+
+Promptoo includes the following third-party code. Each keeps its own licence.
+
+## Three.js (and its example modules)
+
+Files: `vendor/three.min.js` (r147) and `vendor/EffectComposer.js`, `CopyShader.js`, `ShaderPass.js`, `RenderPass.js`, `MaskPass.js`, `LuminosityHighPassShader.js`, `UnrealBloomPass.js`, `BokehShader.js`, `BokehPass.js`.
+Source: https://threejs.org
+
+```
+The MIT License
+
+Copyright © 2010-2022 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
+
+## Fonts
+
+Inter, Space Grotesk and Poppins are loaded from Google Fonts by the pages. They are not stored in this repository and are available under the SIL Open Font License.
+
+## Not covered by the Promptoo licence
+
+The names Veo, Sora, Kling, Runway, Luma, Pika, Midjourney and other tools mentioned in the pages belong to their owners. Promptoo is not affiliated with them.
